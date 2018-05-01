@@ -1,20 +1,25 @@
+
 .menu {
     margin: 0px;
     padding: 0px;
     color: #402E2A;
     font-weight: bold;
-    position: relative;
+    background-color: #D5B0AC;
+    height:30px;
+    text-align: center;
+    
 }
 
 .menu span {
+    display: inline-block;
     width: 100px;
     height: 30px;
     background-color: #D5B0AC;
     line-height: 30px;
-    text-align: center;
     position: relative;
+    
 }
-.menu:not(.menu_vertical) span {
+nav.menu .menu:not(.menu_vertical) span {
     float: left;
 }
 
