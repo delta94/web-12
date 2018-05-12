@@ -10,8 +10,8 @@ app.get ('/', function(req, res) {
     res.sendFile(path.resolve(__dirname, './public/index.html'));
 })
 
-app.get('/:class', function(req, res) {
-    request('https://btvn-web12.herokuapp.com/api/' + req.params.class, function (error, response, body) {
+app.get('/web:class', function(req, res) {
+    request('https://btvn-web12.herokuapp.com/api/web' + req.params.class, function (error, response, body) {
         if (error) console.log(error);
         else {
             var name = "";
@@ -25,6 +25,20 @@ app.get('/:class', function(req, res) {
     })
     
 })
+
+function getDataByUrl(url, onGetDataDone) {
+    request(url, function (error, response, body) {
+        console.log('error', error);
+        if (body) {
+            try {
+                let data = JSON.parse(body);
+                onGetDataDone(data);
+            } catch (error) {
+                console.log(`Error: ${error}`);
+            }
+        }
+    });
+}
 
 
 app.use(express.static('public'));

@@ -1,0 +1,17 @@
+p {color: blue}
+ul li {
+    color: #00ff0d;
+}
+
+ol li {
+    color: red;
+}
+
+ul > li {
+    color: pink;
+}
+
+h1:hover {
+    font-size: 10em;
+    font-weight: 10;
+}
