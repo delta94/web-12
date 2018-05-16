@@ -1,0 +1,10 @@
+{{#if question}}
+    <div>{{question.questionContent}}</div>
+    <div>Vote: {{totalVote}}</div>
+    <div>Vote Yes: {{question.yes}}</div>
+    <div>Vote No: {{question.no}}</div>
+    <button>Another Question</button>
+{{else}}
+    <div>Question not Found</div>
+{{/if}}
+
