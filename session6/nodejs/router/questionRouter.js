@@ -1,18 +1,29 @@
 const express = require('express');
 const fs = require('fs');
 let Router = express.Router();
+
+const QuestionModel = require('../models/question.model');
+QuestionModel.find({}, function(err, questions) {
+    console.log(questions);
+})
+
 //middleware
 Router.use(function (req, res, next) {
-    req.questionList = require('../questionList.json');
-    next();
-    
+    QuestionModel.find({}, function(err, questions) {
+        if (questions.length <= 0) res.render('home', {question: null})
+        else {
+            req.questions = questions;
+            next();
+        };
+    })
 });
 
 Router.get('/', function(req, res) {
     let questionId = req.params.id;
 
 
-    let questionFound = req.questionList.filter(question => question.id == questionId)[0];
+    let questionFound = req.questions.filter(question => question.id == questionId)[0];
+    
     res.render('question', {
         question : questionFound,
         totalVote : questionFound ? questionFound.yes + questionFound.no : 0
@@ -20,10 +31,9 @@ Router.get('/', function(req, res) {
 });
 
 Router.get('/:id', function(req, res) {
-    let questionId = req.params.id;
-    let questionList = require('../questionList.json'); 
+    let questionId = req.params.id; 
 
-    let questionFound = req.questionList.filter(question => question.id == questionId)[0];
+    let questionFound = req.questions.filter(question => question.id == questionId)[0];
     res.render('question', {
         question : questionFound,
         totalVote : questionFound ? questionFound.yes + questionFound.no : 0
@@ -35,11 +45,20 @@ Router.get('/:id/:vote', function(req, res) {
     let questionId = req.params.id;
     
     let vote = req.params.vote;
-    
-    req.questionList[questionId][vote] += 1;
+    QuestionModel.findById(questionId, function (err, question) {
+        if (err) return handleError(err);
+        if ( vote == 'yes') {
+            question.yes++;
+        } else if (vote =='no') {
+            question.no++;
+        }
 
-    fs.writeFileSync('../questionList.json', JSON.stringify(req.questionList), 'utf-8');
+        
+        question.save(function(err, updatedQuestion) {
+            if (err) return handleError(err);
 
+        })
+    })
     res.redirect(`/question/${questionId}`);
 
 
@@ -47,11 +66,22 @@ Router.get('/:id/:vote', function(req, res) {
 // Form 
 Router.post('/:id', function(req, res) {
     let questionId = req.params.id;
-    let questionList = require('../questionList.json');
     let vote = req.body.vote;
+    QuestionModel.findById(questionId, function (err, question) {
+        
+        if (err) return handleError(err);
+        if ( vote == 'yes') {
+            question.yes++;
+        } else if (vote =='no') {
+            question.no++;
+        }
 
-    questionList[questionId][vote] += 1;
-    fs.writeFileSync('../questionList.json', JSON.stringify(req.questionList), 'utf-8');
+        
+        question.save(function(err, updatedQuestion) {
+            if (err) return handleError(err);
+
+        })
+    })
     res.redirect(`/question/${questionId}`);
 
 })
