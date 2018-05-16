@@ -7,11 +7,11 @@ const mongoose = require('mongoose');
 
 const QuestionModel = require('./models/question.model');
 
-mongoose.connect('mongodb://localhost/quyetde', function(err) {
-    if(err) console.log(err);
+mongoose.connect('mongodb://localhost/quyetde', function (err) {
+    if (err) console.log(err);
     else console.log("DB connect success!");
 });
-QuestionModel.find({}, function(err, questions) {
+QuestionModel.find({}, function (err, questions) {
     console.log(questions);
 })
 
@@ -20,30 +20,36 @@ const questionRouter = require('./router/questionRouter');
 
 let app = express();
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 // declare a new engine named 'handlebars from  'handlebars({defaultLayout: 'main'})'
-app.engine("handlebars", handlebars({defaultLayout: 'main'}));
+app.engine("handlebars", handlebars({
+    defaultLayout: 'main'
+}));
 // Set view app's view engine is 'handlebars' already declared above
 app.set('view engine', 'handlebars');
 
 
 
 app.get('/', function (req, res, next) {
-    QuestionModel.find({}, function(err, questions) {
+    QuestionModel.find({}, function (err, questions) {
         console.log(questions);
-        if (questions.length <= 0) res.render('home', {question: null})
+        if (questions.length <= 0) res.render('home', {
+            question: null
+        })
         else {
             req.questions = questions;
             next();
         };
     })
-    
-    
-}, function(req, res) {
-    
+
+
+}, function (req, res) {
+
     res.render('home', {
-        question : req.questions[Math.floor(Math.random() *  req.questions.length)]
+        question: req.questions[Math.floor(Math.random() * req.questions.length)]
     });
 });
 
@@ -51,20 +57,20 @@ app.use('/question', questionRouter);
 
 
 
-app.get('/ask', function(req,res) {
+app.get('/ask', function (req, res) {
     res.render('ask');
 });
 
-app.post('/api/question', function(req, res) {
+app.post('/api/question', function (req, res) {
     let newQuestion = {
         content: req.body.question
     };
-    QuestionModel.create(newQuestion, function(err, questionCreated) {
-        if(err) console.log(err)
+    QuestionModel.create(newQuestion, function (err, questionCreated) {
+        if (err) console.log(err)
         else console.log(questionCreated);
     });
 
-    res.redirect(`/`);
+    res.redirect('/');
 
 });
 
@@ -72,14 +78,14 @@ app.post('/api/question', function(req, res) {
 //Middleware Có thể làm với những trang Notfound, để middleware xuông cuối
 // check điều kiện trước khi chuyển tiếp
 app.use(function (req, res, next) {
-    
+
     res.send('Not Found');
-    
+
 });
 
 app.use(express.static('public'));
 
-app.listen(8000, function(err) {
+app.listen(8000, function (err) {
     if (err) console.log(err);
     else console.log("Server is up!");
 
