@@ -58,6 +58,8 @@ app.use('/question', questionRouter);
 
 
 app.get('/ask', function (req, res) {
+    
+    
     res.render('ask');
 });
 
@@ -74,6 +76,14 @@ app.post('/api/question', function (req, res) {
 
 });
 
+// app.get('/views/layouts/style.css', function(req, res){ 
+//     res.send('/views/layouts/style.css'); 
+//     res.end(); 
+// });
+
+
+
+app.use(express.static('public'));
 
 //Middleware Có thể làm với những trang Notfound, để middleware xuông cuối
 // check điều kiện trước khi chuyển tiếp
@@ -82,8 +92,6 @@ app.use(function (req, res, next) {
     res.send('Not Found');
 
 });
-
-app.use(express.static('public'));
 
 app.listen(8000, function (err) {
     if (err) console.log(err);

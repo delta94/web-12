@@ -2,9 +2,25 @@
 
 <form action="/api/question" method="POST">
 
-    <textarea name="question" id="" cols="30" rows="10"></textarea>
+    <textarea id="content_txt" name="question" id="" cols="30" rows="10" maxlength="200"></textarea>
+    <p id ="message"></p>
 
-    <button>Submit</button>
+    <button class="btn btn-dark">Submit</button>
 
 </form>
+
+<script>
+    var area = document.getElementById("content_txt");
+    var message = document.getElementById("message");
+    var maxLength = 200;
+    var checkLength = function() {
+    if(area.value.length < maxLength) {
+        message.innerHTML = (maxLength-area.value.length) + " characters remaining";
+        }
+    }
+
+    setInterval(checkLength, 1);
+</script>
+
+
 

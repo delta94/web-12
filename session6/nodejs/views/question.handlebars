@@ -1,10 +1,18 @@
 {{#if question}}
-    <div>{{question.content}}</div>
-    <div>Vote: {{totalVote}}</div>
-    <div>Vote Yes: {{question.yes}}</div>
-    <div>Vote No: {{question.no}}</div>
+    <div class="container text-center">
+        <h1>{{question.content}}</h1>
+        <h4>Vote: {{totalVote}}</h4>
+        <div class="progress">
+            <div class="primary" style="width:{{yes}}%">{{yes}}%</div>
+            <div class="danger" style="width:{{no}}%;"> {{no}}%</div>
+        </div>
+        
+
+        <a href="/" class="btn btn-secondary another-question">Another Question</a>
+    </div>
     
-    <a href="/"><button>Another Question</button></a>
+    
+    
 {{else}}    
     <div>Question not Found</div>
 {{/if}}

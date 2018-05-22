@@ -1,8 +1,23 @@
 {{#if question}}
 
-<h1>{{question.content}}</h1>
-<a href="/question/{{question._id}}/yes"><button>Yes/ Right</button></a>
-<a href="/question/{{question._id}}/no"><button>No/ Left</button></a>
+<h1 class="text-center">{{question.content}}</h1>
+<div class="row">
+    <div class="col-md-6 text-center">
+        
+        <a href="/question/{{question._id}}/yes" class="btn btn-primary"><i class="far fa-thumbs-up"> Yes/ Right</i></a>
+    </div>
+    <div class="col-md-6 text-center">
+        <a href="/question/{{question._id}}/no" class="btn btn-danger"><i class="far fa-thumbs-down"> No/ Left</i></a>
+    </div>
+</div>
+
+<div class="row bottom">
+    <div class="col-md-12 text-center">
+        <a href="/question/{{question._id}}" class="btn btn-outline-info">Kết quả vote</a>
+        <a href="/" class="btn btn-outline-success">Câu hỏi khác</a>
+    </div>
+
+</div>
 
 {{else}}
 <h1>Question list is empty!</h1>
