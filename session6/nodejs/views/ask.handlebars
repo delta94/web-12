@@ -1,26 +1,52 @@
 <h1>Ask community a yes/no question</h1>
 
-<form action="/api/question" method="POST">
+<form id="questionForm">
 
-    <textarea id="content_txt" name="question" id="" cols="30" rows="10" maxlength="200"></textarea>
-    <p id ="message"></p>
+    <div class="form-group">
+        <textarea id="question" class="form-control" name="question" cols="30" rows="10" maxlength="200"></textarea>
+    </div>
+    <p id ="text-muted">Còn <span id="remainCharacter">200</span>/200 ký tự</p>
 
     <button class="btn btn-dark">Submit</button>
 
 </form>
 
 <script>
-    var area = document.getElementById("content_txt");
-    var message = document.getElementById("message");
-    var maxLength = 200;
-    var checkLength = function() {
-    if(area.value.length < maxLength) {
-        message.innerHTML = (maxLength-area.value.length) + " characters remaining";
-        }
-    }
-
-    setInterval(checkLength, 1);
+    console.log($)
+    $("#questionForm").submit(function(e) {
+        e.preventDefault(); 
+        $.ajax({
+            url: '/api/question',
+            type: POST,
+            data: {
+                question: $("#question").val()
+            },
+            success: function(response) {
+                console.log("Success", response);
+                if(response.success) window.location.href = `/question/${response.questionId}`;
+            },
+            error: function(response) {
+                console.log("Error", response);
+            }
+        })
+    });
 </script>
 
+
+
+{{!-- <script>
+    let textArea = document.getElementById("question");
+    textArea.addEventListener('input', function() {
+        let remainCharacter = 200 - textArea.value.length;
+        document.getElementById("remainCharacter").innerHTML = remainCharacter;
+    });
+</script> --}}
+
+{{!-- <script>
+    $("#question").on("input", function() {
+        let remainCharacter =200 - $("#question").val().length;
+        $("#remainCharacter").text(remainCharacter);
+    });
+</script> --}}
 
 

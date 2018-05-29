@@ -81,25 +81,39 @@ Router.get('/:id/:vote', function (req, res) {
     //     });
     // });
 
-    QuestionModel.findById(questionId, function (err, question) {
+    try {
+        QuestionModel.findById(questionId)
+        .then(function(questionFound) {
+            questionFound[vote] +=1;
+            return questionFound.save();
+        })
+        .then(function(updatedQuestion) {
+            res.redirect(`/question/${updatedQuestion._id}`);
+        })
+        .catch(function(err) {
+            return handleError(err);
+        })
+    } catch (error) {
+        
+    }
 
-        if (err) return handleError(err);
-        // if (vote == 'yes') {
-        //     question.yes++;
-        // } else if (vote == 'no') {
-        //     question.no++;
-        // }
-        question[vote] +=1;
+    // QuestionModel.findById(questionId, function (err, question) {
 
-        question.remove
+    //     if (err) return handleError(err);
+    //     // if (vote == 'yes') {
+    //     //     question.yes++;
+    //     // } else if (vote == 'no') {
+    //     //     question.no++;
+    //     // }
+    //     question[vote] +=1;
 
 
-        question.save(function (err, updatedQuestion) {
-            if (err) return handleError(err);
 
-        });
-    });
-    res.redirect(`/question/${questionId}`);
+    //     question.save(function (err, updatedQuestion) {
+    //         if (err) return handleError(err);
+    //         res.redirect(`/question/${updatedQuestion._id}`);
+    //     });
+    // });
 
 
 });

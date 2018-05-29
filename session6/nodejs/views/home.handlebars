@@ -13,7 +13,7 @@
 
 <div class="row bottom">
     <div class="col-md-12 text-center">
-        <a href="/question/{{question._id}}" class="btn btn-outline-info">Kết quả vote</a>
+        <a href="/question/{{question._id}}" class="btn btn-outline-info view_question_info">Kết quả vote</a>
         <a href="/" class="btn btn-outline-success">Câu hỏi khác</a>
     </div>
 
@@ -23,6 +23,24 @@
 <h1>Question list is empty!</h1>
 
 {{/if}}
+
+
+<script>
+    $(".btn-next-question").click(function() {
+        $.ajax({
+            url: '/api/question',
+            method: 'GET',
+            success: function(res) {
+                if(res.success) {
+                    $("h1").text(res.question.content);
+                    $(".fa-thums-down").attr("href", `/question/${question._id}/no`);
+                    $(".fa-thums-up").attr("href", `/question/${question._id}/yes`);
+                    $(".view_question_info").attr("href", `/question/${res.question._id}`);
+                }
+            }
+        })
+    })
+</script>
 
 {{!-- <form action="/question/{{question.id}}" method="POST">
     <input type="submit" name="vote" value="yes">

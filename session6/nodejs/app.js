@@ -12,11 +12,12 @@ mongoose.connect('mongodb://localhost/quyetde', function (err) {
     else console.log("DB connect success!");
 });
 QuestionModel.find({}, function (err, questions) {
-    console.log(questions);
+    
 })
 
 
 const questionRouter = require('./router/questionRouter');
+const apiRouter = require('./router/apiRouter');
 
 let app = express();
 
@@ -35,7 +36,6 @@ app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res, next) {
     QuestionModel.find({}, function (err, questions) {
-        console.log(questions);
         if (questions.length <= 0) res.render('home', {
             question: null
         })
@@ -58,23 +58,11 @@ app.use('/question', questionRouter);
 
 
 app.get('/ask', function (req, res) {
-    
-    
     res.render('ask');
 });
 
-app.post('/api/question', function (req, res) {
-    let newQuestion = {
-        content: req.body.question
-    };
-    QuestionModel.create(newQuestion, function (err, questionCreated) {
-        if (err) console.log(err)
-        else console.log(questionCreated);
-    });
 
-    res.redirect('/');
-
-});
+app.use('/api', apiRouter);
 
 // app.get('/views/layouts/style.css', function(req, res){ 
 //     res.send('/views/layouts/style.css'); 

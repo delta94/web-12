@@ -1,0 +1,37 @@
+#logo {
+    width: 200px;
+}
+
+h1 {
+    display: inline-block;
+    height: 90px;
+    line-height: 90px;
+}
+
+.result {
+    display:inline-block;
+    margin-top:40px;
+    padding:30px;
+    border: 1px solid grey;
+    border-radius: 30px;
+}
+
+.result img {
+    width: 30%;
+    vertical-align: top;
+}
+.result .video_info {
+    display:inline-block;
+     width: 60%; 
+     margin-left: 30px; 
+     color: black;
+}
+
+div.row:nth-child(3) {
+    margin-top:50px;
+}
+
+#loading {
+    position: relative;
+    display:  none;
+}
