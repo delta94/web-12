@@ -1,19 +1,22 @@
+let nextPageToken= '';  
+
 $(function () {
+    
     
     $("#keyword").on('input', function () {
         setTimeout(function () {
-            youtubeAPI();
+            search();
         }, 1000);
     })
 
     $("#search").submit(function (e) {
         e.preventDefault();
-        youtubeAPI();
+        search();
     })
 
     $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-            youtubeAPI();
+            search();
         }
     });
 
@@ -28,7 +31,8 @@ $(function () {
 })
 
 
-function youtubeAPI() {
+
+function search() {
 
     let nextPageToken= '';
 
@@ -62,7 +66,7 @@ function youtubeAPI() {
             }
 
             nextPageToken = res.nextPageToken;
-            console.log(nextPageToken);
+            console.log(nextPageToken);  
 
             
 
