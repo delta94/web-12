@@ -1,5 +1,16 @@
+- Design Backend Service:
+    - Nodejs
+    - MVC
+    - RESTful API
+
 1. Collection, Model:
-    - User
+    - User:
+        - Username
+        - Password
+        - Name
+        - Avatar
+        - Email
+        - Active
 
 
 - Image:
@@ -11,7 +22,7 @@
     - Title
     - Description
     - Active
-    - Comment:
+    - Comments:
         + Content
         + CreatedBy
         + CreatedAt
@@ -55,4 +66,4 @@
            + ImageUrl
            + CreatedBy
            + Title
-           + 
+           + Description
